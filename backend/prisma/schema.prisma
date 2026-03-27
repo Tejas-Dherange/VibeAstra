@@ -1,0 +1,88 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  password     String
+  role         Role          @default(STUDENT)
+  interests    String[]
+  applications Application[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  category    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Bus {
+  id          String   @id @default(cuid())
+  route       String
+  arrivalTime DateTime
+  status      String   @default("on-time")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Food {
+  id        String   @id @default(cuid())
+  menu      String
+  rating    Float    @default(3.0)
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Placement {
+  id           String        @id @default(cuid())
+  company      String
+  role         String
+  description  String
+  deadline     DateTime
+  ctc          String?
+  tags         String[]
+  applications Application[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Application {
+  id          String            @id @default(cuid())
+  userId      String
+  placementId String
+  status      ApplicationStatus @default(PENDING)
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  placement   Placement         @relation(fields: [placementId], references: [id], onDelete: Cascade)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([userId, placementId])
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPLIED
+  REJECTED
+  SELECTED
+}
