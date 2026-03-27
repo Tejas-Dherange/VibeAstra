@@ -5,6 +5,7 @@ import {
   Briefcase, RefreshCw, TrendingUp, ChevronRight, Loader2
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import SmartAssistant from '../components/SmartAssistant';
 import api from '../lib/api';
 import useAuthStore from '../store/authStore';
 
@@ -124,6 +125,11 @@ export default function DashboardPage() {
           <StatCard icon={Calendar} label="Upcoming Events" value={summary.events} color="hsl(var(--primary))" to="/events" />
           <StatCard icon={Briefcase} label="Open Placements" value={summary.placements} color="hsl(var(--secondary))" to="/placements" />
           <StatCard icon={Bus} label="Bus Routes" value={summary.buses} color="hsl(var(--accent))" />
+        </div>
+
+        {/* AI Smart Assistant — full width */}
+        <div style={{ marginBottom: '2rem' }}>
+          <SmartAssistant />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '1.5rem' }}>

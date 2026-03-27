@@ -8,6 +8,7 @@ const busRoutes = require('./routes/bus');
 const foodRoutes = require('./routes/food');
 const placementsRoutes = require('./routes/placements');
 const smartFeedRoutes = require('./routes/smartFeed');
+const aiAgentRoutes = require('./routes/aiAgent');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,6 +33,7 @@ app.use('/api/bus', busRoutes);
 app.use('/api/food', foodRoutes);
 app.use('/api/placements', placementsRoutes);
 app.use('/api/smart-feed', smartFeedRoutes);
+app.use('/api/ai', aiAgentRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {
